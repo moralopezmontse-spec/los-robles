@@ -8,7 +8,7 @@ function App() {
   const mostrarMensaje = (texto) => {
     setMensaje(texto);
   };
-
+const [seccionActiva, setSeccionActiva] = useState("inicio");
   const modulos = [
     {
       icono: "🗳️",
@@ -59,12 +59,39 @@ function App() {
 
       {/* BARRA DE NAVEGACIÓN */}
       <nav className="navegacion" aria-label="Navegación principal">
-        <div className="navegacion-enlaces">
-          <a href="#inicio">Inicio</a>
-          <a href="#comunidad">Comunidad</a>
-          <a href="#servicios">Servicios</a>
-          <a href="#contacto">Contacto</a>
-        </div>
+       <div className="navegacion-enlaces">
+  <a
+    href="#inicio"
+    className={seccionActiva === "inicio" ? "activo" : ""}
+    onClick={() => setSeccionActiva("inicio")}
+  >
+    Inicio
+  </a>
+
+  <a
+    href="#comunidad"
+    className={seccionActiva === "comunidad" ? "activo" : ""}
+    onClick={() => setSeccionActiva("comunidad")}
+  >
+    Comunidad
+  </a>
+
+  <a
+    href="#servicios"
+    className={seccionActiva === "servicios" ? "activo" : ""}
+    onClick={() => setSeccionActiva("servicios")}
+  >
+    Servicios
+  </a>
+
+  <a
+    href="#contacto"
+    className={seccionActiva === "contacto" ? "activo" : ""}
+    onClick={() => setSeccionActiva("contacto")}
+  >
+    Contacto
+  </a>
+</div>
 
         <button
           className="boton-sesion"
