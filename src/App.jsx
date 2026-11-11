@@ -4,26 +4,26 @@ import "./App.css";
 
 function App() {
   const [mensaje, setMensaje] = useState("");
+  const [seccionActiva, setSeccionActiva] = useState("inicio");
 
   const mostrarMensaje = (texto) => {
     setMensaje(texto);
   };
-const [seccionActiva, setSeccionActiva] = useState("inicio");
+
   const modulos = [
     {
       icono: "🗳️",
       titulo: "Participación y votaciones",
       descripcion:
-        "Consulta encuestas y participa en las votaciones de la comunidad.",
+        "Consulta encuestas y participa en las decisiones de tu comunidad.",
       boton: "Ingresar",
-      mensaje:
-        "Módulo de participación y votaciones seleccionado.",
+      mensaje: "Módulo de participación y votaciones seleccionado.",
     },
     {
       icono: "📊",
       titulo: "Datos históricos",
       descripcion:
-        "Consulta información histórica y el historial de adeudos de la vivienda.",
+        "Consulta información histórica y el historial de adeudos de tu vivienda.",
       boton: "Consultar",
       mensaje: "Módulo de datos históricos seleccionado.",
     },
@@ -31,7 +31,7 @@ const [seccionActiva, setSeccionActiva] = useState("inicio");
       icono: "💰",
       titulo: "Gestión financiera",
       descripcion:
-        "Consulta información relacionada con la administración financiera de la comunidad.",
+        "Conoce los movimientos y la administración financiera de la comunidad.",
       boton: "Consultar",
       mensaje: "Módulo de gestión financiera seleccionado.",
     },
@@ -39,61 +39,51 @@ const [seccionActiva, setSeccionActiva] = useState("inicio");
       icono: "🏠",
       titulo: "Pagos e historial",
       descripcion:
-        "Consulta los pagos y el historial correspondiente a la vivienda.",
+        "Revisa los pagos realizados y el historial correspondiente a tu vivienda.",
       boton: "Consultar",
       mensaje: "Módulo de pagos e historial seleccionado.",
     },
   ];
 
+  const enlaces = [
+    { id: "inicio", texto: "Inicio" },
+    { id: "comunidad", texto: "Comunidad" },
+    { id: "servicios", texto: "Servicios" },
+    { id: "contacto", texto: "Contacto" },
+  ];
+
   return (
     <div className="app">
+
       {/* ENCABEZADO */}
-      
-<header className="header" id="inicio"> 
-  <div className="marca">
-    <span className="marca-icono">🌳</span>
-    <h1>Los Robles</h1>
-  </div>
-  <p>PORTAL PARA COLONOS</p>
-</header> 
+      <header className="header" id="inicio">
+        <div className="marca">
+          <span className="marca-icono">🌳</span>
+          <h1>Los Robles</h1>
+        </div>
+        <p>PORTAL PARA COLONOS</p>
+      </header>
 
-      {/* BARRA DE NAVEGACIÓN */}
+      {/* NAVEGACIÓN */}
       <nav className="navegacion" aria-label="Navegación principal">
-       <div className="navegacion-enlaces">
-  <a
-    href="#inicio"
-    className={seccionActiva === "inicio" ? "activo" : ""}
-    onClick={() => setSeccionActiva("inicio")}
-  >
-    Inicio
-  </a>
-
-  <a
-    href="#comunidad"
-    className={seccionActiva === "comunidad" ? "activo" : ""}
-    onClick={() => setSeccionActiva("comunidad")}
-  >
-    Comunidad
-  </a>
-
-  <a
-    href="#servicios"
-    className={seccionActiva === "servicios" ? "activo" : ""}
-    onClick={() => setSeccionActiva("servicios")}
-  >
-    Servicios
-  </a>
-
-  <a
-    href="#contacto"
-    className={seccionActiva === "contacto" ? "activo" : ""}
-    onClick={() => setSeccionActiva("contacto")}
-  >
-    Contacto
-  </a>
-</div>
+        <div className="navegacion-enlaces">
+          {enlaces.map((enlace) => (
+            <a
+              key={enlace.id}
+              href={`#${enlace.id}`}
+              className={seccionActiva === enlace.id ? "activo" : ""}
+              aria-current={
+                seccionActiva === enlace.id ? "location" : undefined
+              }
+              onClick={() => setSeccionActiva(enlace.id)}
+            >
+              {enlace.texto}
+            </a>
+          ))}
+        </div>
 
         <button
+          type="button"
           className="boton-sesion"
           onClick={() =>
             mostrarMensaje(
@@ -106,68 +96,89 @@ const [seccionActiva, setSeccionActiva] = useState("inicio");
       </nav>
 
       <main className="contenedor">
+
         {/* BIENVENIDA */}
         <section className="bienvenida" id="comunidad">
-          <span className="bienvenida-icono">🌳</span>
-
+          <div className="bienvenida-icono">🌳</div>
+          <span className="bienvenida-etiqueta">
+            NUESTRA COMUNIDAD
+          </span>
           <h2>Bienvenido a Los Robles</h2>
-
           <p>
-            Consulta y gestiona la información de tu comunidad.
+            Un espacio para informarte, participar y gestionar
+            los servicios de tu comunidad.
           </p>
         </section>
 
-        {/* MÓDULOS */}
-        <section className="grid" id="servicios">
-          {modulos.map((modulo) => (
-            <article className="tarjeta" key={modulo.titulo}>
-              <div className="icono">{modulo.icono}</div>
+        {/* SERVICIOS */}
+        <section className="seccion-servicios" id="servicios">
+          <div className="encabezado-seccion">
+            <span>GESTIÓN COMUNITARIA</span>
+            <h2>Explora nuestros servicios</h2>
+            <p>
+              Accede a las herramientas y servicios disponibles
+              para los residentes.
+            </p>
+          </div>
 
-              <h2>{modulo.titulo}</h2>
+          <div className="grid">
+            {modulos.map((modulo) => (
+              <article className="tarjeta" key={modulo.titulo}>
+                <div className="icono">{modulo.icono}</div>
 
-              <p>{modulo.descripcion}</p>
+                <h3>{modulo.titulo}</h3>
+
+                <p>{modulo.descripcion}</p>
+
+                <button
+                  type="button"
+                  className="boton"
+                  onClick={() => mostrarMensaje(modulo.mensaje)}
+                >
+                  {modulo.boton}
+                </button>
+              </article>
+            ))}
+
+            {/* EMERGENCIAS */}
+            <article className="tarjeta tarjeta-emergencia">
+              <div className="icono icono-emergencia">🚨</div>
+
+              <h3>Emergencias</h3>
+
+              <p>
+                Consulta las opciones de contacto para situaciones
+                que requieren atención inmediata.
+              </p>
 
               <button
-                className="boton"
-                onClick={() => mostrarMensaje(modulo.mensaje)}
+                type="button"
+                className="boton-emergencia"
+                onClick={() =>
+                  mostrarMensaje(
+                    "Botón de pánico activado. Este prototipo no realiza llamadas reales ni envía alertas."
+                  )
+                }
               >
-                {modulo.boton}
+                BOTÓN DE PÁNICO
               </button>
             </article>
-          ))}
-
-          {/* EMERGENCIAS */}
-          <article className="tarjeta tarjeta-emergencia">
-            <div className="icono">🚨</div>
-
-            <h2>Emergencias</h2>
-
-            <p>
-              Accede al botón de pánico y a las opciones de contacto
-              para situaciones de emergencia.
-            </p>
-
-            <button
-              className="boton-emergencia"
-              onClick={() =>
-                mostrarMensaje(
-                  "Botón de pánico activado. Este prototipo no realiza llamadas reales."
-                )
-              }
-            >
-              BOTÓN DE PÁNICO
-            </button>
-          </article>
+          </div>
         </section>
 
-        {/* MENSAJES */}
+        {/* NOTIFICACIONES */}
         {mensaje && (
           <section className="mensaje" role="status">
-            <p>{mensaje}</p>
+            <div className="mensaje-contenido">
+              <span className="mensaje-icono">✓</span>
+              <p>{mensaje}</p>
+            </div>
 
             <button
+              type="button"
               className="boton-cerrar"
               onClick={() => setMensaje("")}
+              aria-label="Cerrar notificación"
             >
               Cerrar
             </button>
@@ -175,11 +186,20 @@ const [seccionActiva, setSeccionActiva] = useState("inicio");
         )}
       </main>
 
-      {/* CONTACTO */}
+      {/* PIE DE PÁGINA */}
       <footer className="footer" id="contacto">
-        <p>Los Robles · Portal para colonos</p>
-        <p>Espacio de información y comunicación comunitaria.</p>
+        <div className="footer-marca">
+          🌳 Los Robles
+        </div>
+        <p>Portal para colonos</p>
+        <p>
+          Espacio de información y comunicación comunitaria.
+        </p>
+        <span className="footer-final">
+          © 2026 Los Robles · Todos los derechos reservados.
+        </span>
       </footer>
+
     </div>
   );
 }
